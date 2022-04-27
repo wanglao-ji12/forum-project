@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+<div>
+    <div class="postings">
+        {% for posting in postings %}
+            <div class="posting">
+            
+            </div>
+        {% endfor %}
+    {% if user.is_authenticated %}
+    <div class="side">
+        <div class="mine">
+            <div id="u_headportrait">
+                <img src=""/>
+            </div>
+            <div id="u_information">
+                <p>用户昵称</p>
+                <p>洞龄</p>
+                <p>个性签名</p>
+            </div>
+        </div>
+        <div class="calender">非必须
+        </div>
+        <div class="chat_romm">
+            <form method="POST" action="/createchatroom">
+                <input type="submit" value="找人聊聊吧~">
+            </form>
+        </div>
+    <div>
+    {% endif %}
+</div>
+{% endblock %}
