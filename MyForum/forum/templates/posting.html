@@ -1,3 +1,9 @@
+<script>
+    function comment(){
+        document.querySelector('.addcomment').style.display='block';
+    }
+</script>
+
 {% extends "layout.html" %}
 {% block body %}
     <div class="firstfloor">
@@ -5,13 +11,15 @@
         <div id="describtion">
             {{posting.p_Des}}
         </div>
-        <div id="collect">
+        <div id="">
             <form method="GET" action="/collect">
-                <button name="c">收藏</button>
+                <input name="p" value={{posting.id}} type="number" style="display:none"> 
+                <input type="submit" value="收藏">
             </form>
+            <button onclick="comment()">评论</button>
         </div>
     </div>
-    <div class="addcomment">
+    <div class="addcomment" style="display:none">
         <form method="GET" action="/addcomment">
             <input type="textarea" name="content" placeholder="我想说......">
             <input type="submit" value="评论">
@@ -27,11 +35,11 @@
             {{comment.c_Content}}
         </div>
         <div class="c_Date">
-            评论于 {{comment.c_Date}}
+            评论于 : {{comment.c_Date}}
         </div>
         <div class="c_Like">
             <form method="GET" action="/like">
-                <button name="l"><img src="https://s3.bmp.ovh/imgs/2022/04/29/72e97020c84f2106.png"></button>{{comment.c_Likes}}
+                <button id="like?" onclick="likechange()" name="l"><img src="https://s3.bmp.ovh/imgs/2022/04/29/72e97020c84f2106.png"></button>{{comment.c_Likes}}
             </form>
         </div>
     </div>

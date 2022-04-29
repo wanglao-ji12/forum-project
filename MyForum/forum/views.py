@@ -1,5 +1,6 @@
+from sys import float_repr_style
 from django.shortcuts import render
-from .models import User, Posting, Comment
+from .models import Collection, User, Posting, Comment
 from django.utils import timezone
 # Create your views here.
 
@@ -31,3 +32,14 @@ def addComment(request):
     comment=Comment(c_User_id=user,c_Content=content,c_Date=date)
     comment.save()
     return True
+
+def collect(request):
+    user=request.user
+    p=request.GET['p']
+    posting=Posting.objects.get(id=p)
+    if(Collection.objects.filter(User_id=user,Posting_id=posting) == None):
+        collect=Collection(User_id=user,Posting_id=posting)
+        collect.save()
+        return True
+    else : 
+        return False
