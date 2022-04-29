@@ -12,8 +12,6 @@
                 <p>个性签名：{{user.signature}}</p>
             </div>
         </div>
-        <div class="calender">非必须
-        </div>
         <div class="myposting">
             {% for myposting in mypostings %}
             <a href="{% url 'showposting' %}? p={{myposting.id}}">
@@ -21,6 +19,13 @@
             </a>
             {% endfor %}
         </div>
+        <div class="mycollection">
+            {% for collection in mycollection %}
+            <a href="{% url 'showposting' %}? p={{collection.id}}">
+                <p>{{collection.p_Title}}</p>
+            </a>
+            {% endfor %} 
+        </div>           
     <div>
     {% endif %}
     <div class="postings">

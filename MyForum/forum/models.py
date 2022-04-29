@@ -21,6 +21,8 @@ class Posting(models.Model):
     p_Date=models.DateField()
     p_Comments_id=models.ForeignKey(Comment,on_delete=models.CASCADE)
 
-
+class Collection(models.Model):
+    User_id=models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    Posting_id=models.ForeignKey(Posting,on_delete=models.DO_NOTHING)
 
 

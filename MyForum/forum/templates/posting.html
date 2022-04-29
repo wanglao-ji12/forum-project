@@ -1,18 +1,38 @@
 {% extends "layout.html" %}
 {% block body %}
     <div class="firstfloor">
-        <h1>帖子的标题</h1>
-        <div id="describtion">帖子描述
+        <h1>{{posting.p_Title}}</h1>
+        <div id="describtion">
+            {{posting.p_Des}}
         </div>
+        <div id="collect">
+            <form method="GET" action="/collect">
+                <button name="c">收藏</button>
+            </form>
+        </div>
+    </div>
+    <div class="addcomment">
+        <form method="GET" action="/addcomment">
+            <input type="textarea" name="content" placeholder="我想说......">
+            <input type="submit" value="评论">
+        </form>        
     </div>
     {% for comment in comments %}
     <div class="comment">
         <div id="c_user">
-            <img src="">
-            <p>昵称</p>
+            <img src="{{comment.c_User_id.headportrait}}">
+            <p>{{comment.c_User_id.username}}</p>
         </div>
         <div id="c_content">
-        几楼：内容
+            {{comment.c_Content}}
+        </div>
+        <div class="c_Date">
+            评论于 {{comment.c_Date}}
+        </div>
+        <div class="c_Like">
+            <form method="GET" action="/like">
+                <button name="l"><img src="https://s3.bmp.ovh/imgs/2022/04/29/72e97020c84f2106.png"></button>{{comment.c_Likes}}
+            </form>
         </div>
     </div>
     {% endfor %}

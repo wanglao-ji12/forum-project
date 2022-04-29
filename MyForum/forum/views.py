@@ -2,6 +2,10 @@ from django.shortcuts import render
 from .models import User, Posting, Comment
 from django.utils import timezone
 # Create your views here.
+
+def entry(request):
+    return render(request,'entry.html')
+
 def index(request):
     user=request.user
     postings=Posting.objects.all()
