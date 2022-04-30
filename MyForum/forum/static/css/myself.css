@@ -1,0 +1,12 @@
+.mainblock{
+    margin: 50px 200px 0 200px;
+    border-style: solid;
+    border-radius: 16px;
+}
+
+.name{
+    height: 50px;
+    margin: 8px auto 8px 17px;
+    font-size: 17px;
+    
+}
