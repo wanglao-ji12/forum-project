@@ -1,7 +1,14 @@
+from audioop import reverse
 from sys import float_repr_style
+from django.db import IntegrityError
 from django.shortcuts import render
+
 from .models import Collection, User, Posting, Comment
 from django.utils import timezone
+from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import auth
 # Create your views here.
 
 def entry(request):
@@ -43,3 +50,57 @@ def collect(request):
         return True
     else : 
         return False
+
+def register(request):
+    if request.method =='POST':
+        username=request.POST['username']
+        email=request.POST['email']
+        password=request.POST['password']
+        confirmation=request.POST['confirmation']
+
+        if password==confirmation:
+            try:
+                user=User.objects.create_uaer(username,email,password)
+                user.save()
+            except IntegrityError:
+                return render(request,'register.html',{
+                    'message': "Username already taken."
+                })
+            login(request,user)
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            return render(request,'register.html',{
+                "message" : "Password doesn't match the confirmation."
+            })
+    else:
+        return render(request,'register.html')
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
+
+def log_view(request):
+    if request.method=='POST':
+        username=request.POST['username']
+        password=request.POST['password']
+        user=authenticate(request,username=username,password=password)
+
+        if user is not None:
+            auth_obj=authenticate(request,username=username,password=password)
+            if auth_obj:
+                auth.login(request,auth_obj)
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            return render(request,'login.html',{
+                "message": "Invalid username or password."
+            })
+    else:
+        return render(request,'login.html')
+
+@login_required
+def Showmyself(request):
+    user=request.user
+    return render(request,'myself.html',{
+        "user" : user
+    })
